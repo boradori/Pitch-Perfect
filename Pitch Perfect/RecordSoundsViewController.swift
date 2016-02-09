@@ -27,12 +27,12 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         recordLabel.text = "Tap to Record"
         recordLabel.hidden = false
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     @IBAction func recordAudio(sender: UIButton) {
         print("in recordAudio")
         recordLabel.hidden = false
@@ -44,14 +44,14 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         
         // dirPath defines where to save file as a string
         let dirPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-
+        
         let recordingName = "my_audio.wav"
         let pathArray = [dirPath, recordingName]
         // filePath is pathArray converted in NSURL
-            // NSURL.fileURLWithPathComponents returns string as NSURL
+        // NSURL.fileURLWithPathComponents returns string as NSURL
         let filePath = NSURL.fileURLWithPathComponents(pathArray)
-//        print(filePath)
-
+        print(filePath)
+        
         
         // AVAudioRecorder is there to track one indivisual recording
         // AVAudioSession is there to enable and track sound recording as a whole
@@ -66,7 +66,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         audioRecorder.prepareToRecord()
         audioRecorder.record()
     }
-
+    
     
     @IBAction func pauseAudio(sender: UIButton) {
         // http://stackoverflow.com/questions/29004182/how-to-change-uibutton-image-after-clicking-in-swift got information about changing image from this stackoverflow page
@@ -82,7 +82,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
             recordLabel.text = "Recording in progress"
         }
     }
-
+    
     // This code runs when the audio finishes recording
     func audioRecorderDidFinishRecording(recorder: AVAudioRecorder, successfully flag: Bool) {
         if (flag) {
@@ -90,8 +90,6 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
             // recorder is the first argument of the function
             // lastPathComponent gives name of the file
             recordedAudio = RecordedAudio(filePathURL: recorder.url, title: recorder.url.lastPathComponent!)
-            recordedAudio.filePathURL = recorder.url
-            recordedAudio.title = recorder.url.lastPathComponent
             
             // perform segue
             // stopRecording will be used for conditional statement
@@ -117,7 +115,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         }
         
     }
-
+    
     @IBAction func stopAudio(sender: UIButton) {
         recordLabel.hidden = true
         audioRecorder.stop()

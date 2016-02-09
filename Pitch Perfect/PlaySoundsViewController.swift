@@ -10,25 +10,22 @@ import UIKit
 import AVFoundation
 
 class PlaySoundsViewController: UIViewController {
-
+    
     var audioPlayer:AVAudioPlayer!
     var receivedAudio:RecordedAudio!
-    
     var audioFile:AVAudioFile! // This is to convert NSURL to AVAudioFile and check viewDidLoad
-    
     var audioEngine:AVAudioEngine!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         audioPlayer = try! AVAudioPlayer(contentsOfURL: receivedAudio.filePathURL)
         audioPlayer.enableRate = true
         
         audioEngine = AVAudioEngine()
         audioFile = try! AVAudioFile(forReading: receivedAudio.filePathURL)
-        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -69,9 +66,7 @@ class PlaySoundsViewController: UIViewController {
         // Engine is started to start processing
         audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
         try! audioEngine.start()
-        
         audioPlayerNode.play()
-        
     }
     
     @IBAction func playChipmunkAudio(sender: UIButton) {
@@ -91,6 +86,4 @@ class PlaySoundsViewController: UIViewController {
     @IBAction func stopAudio(sender: UIButton) {
         stopAudioPlayerEngine()
     }
-
-
 }
